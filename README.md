@@ -30,3 +30,12 @@ this file contains C sessions assginements, AVR interfacing (Protuse)  assignmen
 
 # Session4 ass_1
 ![4-1](https://user-images.githubusercontent.com/33464259/204272269-185ebeaa-951c-4f6a-991d-76a13600e019.PNG)
+
+# Session4 ass_2
+![4-2](https://user-images.githubusercontent.com/33464259/204539027-b77930d5-9c3b-4bf3-b03c-0dda528a49c8.PNG)
+
+# Session5 ass_1
+![5-1](https://user-images.githubusercontent.com/33464259/204539169-a8b3987c-a538-4911-bef0-0c70a2f36a96.PNG)
+
+# Session5 ass_2
+![5-2](https://user-images.githubusercontent.com/33464259/204539272-9333f72c-30cb-4a11-a867-e98d6b2fff3a.PNG)

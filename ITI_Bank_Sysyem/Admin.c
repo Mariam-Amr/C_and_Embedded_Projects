@@ -25,7 +25,7 @@ void Admin_menu(void){
     system("color 9");        //  9 light blue color
     printf("\n\n\t\t\t\t\tITI ACCOUNT BANKING SYSTEM");
     printf("\n\n\n\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB3 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-    printf("\n\n\t\t1.Create new Account\n\t\t2.Open An Existing Account\n\t\t\n\t\t3.Exit\n\n\n\n\n\t\t Enter your choice:");
+    printf("\n\n\t\t1.Create new Account\n\t\t2.Open An Existing Account\n\t\t\n\t\t3.View Clients Data \n\t\t\n\t\t4.Exit\n\n\n\n\n\t\t Enter your choice:");
     scanf("%d",&choice);
 
     system("cls");
@@ -35,7 +35,9 @@ void Admin_menu(void){
         break;
         case 2:Open_An_Existing_Account();
         break;
-        case 3:close();
+        case 3:view_list();
+        break;
+        case 4:close();
         break;
         default: printf("Please Enter A valid chois!!");
         break;
@@ -390,17 +392,17 @@ void Deposit_in_Account(){
                     fprintf(newrec,"%d %s %d %d %s %lf  %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
                     printf("\n\nDeposited successfully!");
                 }
-                else
+                else if(choice==2)
                 {
                     printf("Enter the amount you want to withdraw:EGP ");
                     scanf("%f",&transaction.amount_to_deposite);
                     add.amount_to_deposite-=transaction.amount_to_deposite;
                     fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_id,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
                     printf("\n\nWithdrawn successfully!");
-                }
+                }else{
 
        fprintf(newrec,"%d %s %d %d %s %lf %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,upd.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
-
+                }
         }
 
 
@@ -408,6 +410,41 @@ void Deposit_in_Account(){
     fclose(newrec);
 }
 
+//------------------------view the database of the bank--------------------------
+
+void view_list(){
+
+    FILE *view;
+    view=fopen("Bank_Data_Base.dat","r");  //read from data file that is already created
+    int test=0;
+    system("cls");
+    printf("\nACC. NO.\t\tNAME\t\t\tADDRESS\t\t\tAge\t\t\tNational ID\n");
+
+    while(fscanf(view,"%d %s %d %s %d %s %f %d/%d/%d\n",&add.account_id,add.name,&add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+       {
+           printf("\n%6d\t\t%12s\t\t%10s\t\t%14d\n",add.account_id,add.name,add.address,add.national_id);
+           test++;
+       }
+
+    fclose(view);
+    if (test==0)
+        {   system("cls");
+            printf("\nNO RECORDS!!\n");}
+
+    view_list_invalid:
+     printf("\n\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+            Admin_menu();
+        else if(main_exit==0)
+            close();
+        else
+        {
+            printf("\nInvalid!\a");
+            goto view_list_invalid;
+        }
+}
 
 
 //-------------------------------random password generation function----------------------------

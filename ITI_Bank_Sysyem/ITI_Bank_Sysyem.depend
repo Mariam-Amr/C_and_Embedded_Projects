@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1670049500 source:d:\projects\c_projects\iti_bank_sysyem\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+

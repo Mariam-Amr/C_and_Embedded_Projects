@@ -417,14 +417,6 @@ void Deposit_in_Account(){
     fclose(newrec);
 }
 
-//-----------------------------Get Cash function---------------------------------
- void Get_Cash(){
-
-
-
-
-
-}
 
 //-------------------------------random password generation function----------------------------
 void Randum_Password_Generation(){

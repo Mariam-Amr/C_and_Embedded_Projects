@@ -3,7 +3,8 @@
 #include<windows.h>
 #include <string.h>
 #include "Admin.h"
-
+extern main_exit;
+extern  i,j;
 //----------function to Exit the whole system---------------
 void close(void){
 
@@ -12,8 +13,7 @@ void close(void){
 
 //----------function to delay till the next menu will appear----------------
 void fordelay(long long int j){
-
-int i,k;
+  int i,k;
     for(i=0;i<j;i++)
          k=i;
 }
@@ -55,10 +55,10 @@ void Create_New_Account(){
     printf("\n\t\t\t\t\xB2\xB2\xB2\xB2 ADD RECORD \xB2\xB2\xB2\xB2");
     printf("\n\n\nEnter today's date(mm/dd/yyyy):");
     //save the date to deposits
-    scanf("%d/%d/%d",&add.deposit.month,&add.deposit.day,&add.deposit.year);
+    scanf("%d%d%d",&add.deposit.month,&add.deposit.day,&add.deposit.year);
     printf("\nEnter Account ID:");
     scanf("%d",&check.account_id);
-    while(fscanf(ptr,"%d %s %d %s %d %s %f %d/%d/%d\n",&add.account_id,add.name,&add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    while(fscanf(ptr,"%d %s %d %s %d %s %f %d%d%d\n",&add.account_id,add.name,&add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
     {
         if (check.account_id==add.account_id)
             {printf("Account No. Already Exist!");
@@ -67,12 +67,12 @@ void Create_New_Account(){
 
             }
     }
-    add.account_id == check.account_id;
+    add.account_id = check.account_id;
     printf("\nEnter the name:");
-    scanf("%s",add.name);
+    scanf("%s",&add.name);
  //-------make sure user enter his full name----------------
-    int counter=0;
-    for (u8 i = 0; i <strlen(name) ; i++)
+   /* int counter=0;
+    for (int i = 0; i <strlen(name) ; i++)
     {
         int counter=0;
         if (name[i] == ' ')
@@ -85,22 +85,21 @@ void Create_New_Account(){
         return 1;
     }
     puts("!!! You need to  enter your first 4 names as in your National ID Card");
-    return 0;
-}
+    return 0;*/
+
     printf("\nEnter the age: ");
     scanf("%d",&add.age);
  //--------------if user age less then 18-----------
-    if (age<=18){
+    if (add.age<=18){
      printf("\nEnter the Gurdian National ID: ");
      scanf("%d",&add.gardian_national_id);
 //--------------make sure user enter the full 14 digits id number-------------
-         if (strlen(gardian_national_id) == 14)
+         if (strlen(add.gardian_national_id) != 14)
     {
-        return 1;
+puts("!!!You need to enter  a 14 digits for the National ID Number");
+       close();
     }
-   puts("!!!You need to enter  a 14 digits for the National ID Number");
-   return 0;
-}
+
 }else
     {
     printf("\nEnter the address: ");
@@ -113,15 +112,16 @@ void Create_New_Account(){
 
     if (strlen(national_id) == 14)
     {
-        return 1;
+  puts("!!!You need to enter  a 14 digits for the National ID Number");
+       close();
     }
-   puts("!!!You need to enter  a 14 digits for the National ID Number");
-   return 0;
+
+
 }
     printf("\nEnter the amount to deposit: EGP");
     scanf("%f",&add.amount_to_deposite);
     printf("\nType of account:\n\t#ACTIVE\n\t#CLOSED\n\t#RESTRICTED\tEnter your choice:");
-    scanf("%s",add.account_staus);
+    scanf("%s",&add.account_staus);
     fprintf(ptr,"%d %s %d %s %d %s %f %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
     fclose(ptr);
     printf("\nAccount created successfully!");
@@ -136,12 +136,14 @@ void Create_New_Account(){
     else if(main_exit==0)
         close();
 
-    else
+
+
+ else
         {
             printf("\nInvalid!\a");
             goto add_invalid;
         }
-
+}
 
  //-----------------function to open existing account with sub-menus---------------------
  void Open_An_Existing_Account(){
@@ -150,8 +152,8 @@ void Create_New_Account(){
     int choice;
     ptr=fopen("Bank_Data_Base.dat","r");
     printf("Check account by\n1.Account no.\n:");
-   printf("Enter the account number:");
-   scanf("%d",&check.account_id);
+    printf("Enter the account number:");
+    scanf("%d",&check.account_id);
 
         while (fscanf(ptr,"%d %s %d %s %d %s %lf  %d/%d/%d",&add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
 {

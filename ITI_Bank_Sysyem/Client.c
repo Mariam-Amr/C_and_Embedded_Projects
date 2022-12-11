@@ -4,7 +4,8 @@
 #include <string.h>
 #include "Admin.h"
 #include "Client.h"
-
+extern main_exit;
+extern  i,j;
 //----------function to Exit the whole system---------------
 void close(void){
 
@@ -27,7 +28,7 @@ void Client_menu(void){
     system("color 9");        //  9 light blue color
     printf("\n\n\t\t\t\t\tITI ACCOUNT BANKING SYSTEM");
     printf("\n\n\n\t\t\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB3 WELCOME TO THE MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
-    printf("\n\n\t\t1.Make Transaction\n\t\t2.Get Cash\n\t\t\n\t\t3.Cash Deposite\n\t\t\n\t\t4.Change Passward\n\n\n\n\n\t\t5.Return to main menue\n\n\n\n\n\t\t6. Enter your choice:");
+    printf("\n\n\t\t1.Make Transaction\n\t\t2.Get Cash\n\t\t\n\t\t3.Cash Deposite\n\t\t\n\t\t4.Change Passward\n\n\n\n\n\t\t5.Exit\n\n\n\n\n\t\t Enter your choice:");
     scanf("%d",&choice);
 
     system("cls");
@@ -41,9 +42,7 @@ void Client_menu(void){
         break;
         case 4:Client_Change_Account_Password();
         break;
-        case 5; Client_menu();
-        break;
-        case 6:close();
+        case 5:close();
         break;
         default: printf("Please Enter A valid chois!!");
         break;
@@ -51,7 +50,7 @@ void Client_menu(void){
 }
 
 //-------client make transaction--------------------------
-Client_Make_Transaction(){
+void Client_Make_Transaction(){
 int choice,test=0;
     FILE *old,*newrec;
     old=fopen("Bank_Data_Base.dat","r");
@@ -64,7 +63,7 @@ int choice,test=0;
 
             if(add.account_id==transaction.account_id)
             {   test=1;
-                if(strcmpi(add.account_staus,"closed")==0)
+                if(strcmp(add.account_staus,"closed")==0)
                 {
                     printf("\a\a\a\n\nYOU CANNOT DEPOSIT OR WITHDRAW CASH IN CLOSED ACCOUNTS!!!!!");
                     fordelay(1000000000);
@@ -86,7 +85,7 @@ int choice,test=0;
                 {
                     printf("Enter the amount you want to withdraw:EGP ");
                     scanf("%f",&transaction.amount_to_deposite);
-                    add.amount_to_deposite-=transaction.amount_to_deposite;
+                    add.amount_to_deposite -=transaction.amount_to_deposite;
                     fprintf(newrec,"%d %s %d %s %d %s %d %f %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_id,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
                     printf("\n\nWithdrawn successfully!");
                 }
@@ -109,7 +108,7 @@ int choice,test=0;
       scanf("%d",&main_exit);
       system("cls");
       if (main_exit==0)
-        transact();
+        Client_Make_Transaction();
     else if (main_exit==1)
        Admin_menu();
     else if (main_exit==2)
@@ -131,21 +130,11 @@ int choice,test=0;
         else
             close();
    }
-     else
-        {printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
-        scanf("%d",&main_exit);
-        system("cls");
-        if (main_exit==1)
-          Client_menu();
-        else
-            close();
-        }
-
-}
-
 
 
 }
 
 
-//-------------------
+
+
+

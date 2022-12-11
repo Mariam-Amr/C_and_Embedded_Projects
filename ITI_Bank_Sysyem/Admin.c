@@ -11,7 +11,7 @@ void close(void){
 }
 
 //----------function to delay till the next menu will appear----------------
-void fordelay(int j){
+void fordelay(long long int j){
 
 int i,k;
     for(i=0;i<j;i++)
@@ -139,8 +139,8 @@ void Create_New_Account(){
             printf("\nInvalid!\a");
             goto add_invalid;
         }
-}
-}
+
+
  //-----------------function to open existing account with sub-menus---------------------
  void Open_An_Existing_Account(){
     FILE *ptr;
@@ -202,6 +202,7 @@ fclose(ptr);
         }
  }
  }
+
 //-------------------------make transaction function------------------
  void Make_Transaction(){
  int choice,test=0;
@@ -285,5 +286,107 @@ fclose(ptr);
    }
 
 }
+
+//---------------------------change account status function ----------------
+Change_Account_Status(){
+ int choice,test=0;
+    FILE *old,*newrec;
+    old=fopen("Bank_Data_Base.dat","r");
+    newrec=fopen("new.dat","w");
+
+    printf("\nEnter the account no. of the customer whose info you want to change:");
+    scanf("%d",&upd.account_id);
+    while(fscanf(old,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.account_id,add.name,&add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    {
+        if (add.account_id==upd.account_id)
+        {   test=1;
+            printf("\nWhich information do you want to change?\n1.Account Status\n2.Name\n\nEnter your choice(1 for Account Status and 2 for Name):");
+            scanf("%d",&choice);
+            system("cls");
+            if(choice==1)
+                {printf("Enter the new Account Status:");
+                scanf("%s",upd.account_staus);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,add.name,add.age,upd.account_staus,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+                system("cls");
+                printf("Changes saved!");
+                }
+            else if(choice==2)
+                {
+                    printf("Enter the new Name:");
+                scanf("%lf",&upd.name);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,upd.name,add.age,add.address,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+                system("cls");
+                printf("Changes saved!");
+                }
+
+        }
+        else
+            fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+    }
+    fclose(old);
+    fclose(newrec);
+    remove("Bank_Data_Base.dat");
+    rename("new.dat","Bank_Data_Base.dat");
+
+if(test!=1)
+        {   system("cls");
+            printf("\nRecord not found!!\a\a\a");
+            edit_invalid:
+              printf("\nEnter 0 to try again,1 to return to main menu and 2 to exit:");
+              scanf("%d",&main_exit);
+              system("cls");
+                 if (main_exit==1)
+
+                    Admin_menu();
+                else if (main_exit==2)
+                    close();
+                else if(main_exit==0)
+                    edit();
+                else
+                    {printf("\nInvalid!\a");
+                    goto edit_invalid;}
+        }
+    else
+        {printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+          Admin_menu();
+        else
+            close();
+        }
+}
+
+
+//-----------------------------deposit in account function------------------
+void Deposit_in_Account(){
+
+
+
+
+}
+
+//-----------------------------Get Cash function---------------------------------
+ void Get_Cash(){
+
+
+
+
+
+}
+
+//-------------------------------random password generation function----------------------------
+void Randum_Password_Generation(){
+
+	char password[] = "1234567890qwertyuiopasdfghjklzxcvbnm!@#$^&*()_- +=QWERTYUIOPASDFGHJKLZXCVBNM':\"<>,.?";
+
+	srand(time(NULL));
+	for(u8 i = 0; i < 9; i++)
+	{
+		printf("%c", password[rand() % (sizeof password - 1)]);
+	}
+}
+
+
 
 

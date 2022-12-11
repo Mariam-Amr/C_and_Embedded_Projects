@@ -284,11 +284,20 @@ fclose(ptr);
         else
             close();
    }
+     else
+        {printf("\n\n\nEnter 1 to go to the main menu and 0 to exit:");
+        scanf("%d",&main_exit);
+        system("cls");
+        if (main_exit==1)
+          Admin_menu();
+        else
+            close();
+        }
 
 }
 
 //---------------------------change account status function ----------------
-Change_Account_Status(){
+void Change_Account_Status(){
  int choice,test=0;
     FILE *old,*newrec;
     old=fopen("Bank_Data_Base.dat","r");
@@ -296,7 +305,7 @@ Change_Account_Status(){
 
     printf("\nEnter the account no. of the customer whose info you want to change:");
     scanf("%d",&upd.account_id);
-    while(fscanf(old,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.account_id,add.name,&add.age,add.address,add.national_id,add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+    while(fscanf(old,"%d %s %d %s %d %s %d %d/%d/%d",&add.account_id,add.name,&add.age,add.address,add.national_id,&add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
     {
         if (add.account_id==upd.account_id)
         {   test=1;
@@ -306,7 +315,7 @@ Change_Account_Status(){
             if(choice==1)
                 {printf("Enter the new Account Status:");
                 scanf("%s",upd.account_staus);
-                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,add.name,add.age,upd.account_staus,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+                fprintf(newrec,"%d %s %d %d %s %lf %d/%d/%d\n",add.account_id,add.name,add.age,upd.account_staus,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
                 system("cls");
                 printf("Changes saved!");
                 }
@@ -321,7 +330,8 @@ Change_Account_Status(){
 
         }
         else
-            fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+        fprintf(newrec,"%d %s %d %d %s %lf %d/%d/%d\n",add.account_id,add.name,add.age,upd.account_staus,add.national_id,add.account_staus,add.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
+
     }
     fclose(old);
     fclose(newrec);
@@ -360,10 +370,51 @@ if(test!=1)
 
 //-----------------------------deposit in account function------------------
 void Deposit_in_Account(){
+     int choice,test=0;
+    FILE *old,*newrec;
+    old=fopen("Bank_Data_Base.dat","r");
+    newrec=fopen("new.dat","w");
+	int account_id[6];
+	long int amount_to_deposite;
+
+	 if (old == NULL)
+    {
+        printf("\n\t\t\t Worng data !\n");
+    }
+
+    system("cls");
+    printf("\t\t\t\tDeposit in Account\n");
+
+    printf("\n\t\t\tEnter Account ID : ");
+    scanf("%s",&account_id);
+
+     while(fscanf(old,"%d %s %d %s %d %s %d %d/%d/%d",&add.account_id,add.name,&add.age,add.address,add.national_id,&add.account_staus,&add.amount_to_deposite,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
+
+    {
+        if (strcmp(deposite.account_id) == 0)
+        {
+			if((Status = "Active"))
+            {printf("\n\t\t\tCurrent Balance:EGP %.2f",deposite.amount_to_deposite);
+            printf("\n\t\t\tEnter the amount you want to deposit:EGP ");
+            scanf("%f", &amount_to_deposite);
+            deposite.amount_to_deposite = deposite.amount_to_deposite + amount_to_deposite;
+            printf("\n\t\t\tCurrent Balance after Deposit:EGP %.2f", deposite.amount_to_deposite);
+
+            fprintf(newrec,"%d %s %d %d %s %lf %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,upd.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
 
 
+            printf("\n\n\t\t\tDeposited successfully!\n\n");
+			}
+        }
+		else
+        {
+       fprintf(newrec,"%d %s %d %d %s %lf %d/%d/%d\n",add.account_id,add.name,add.age,add.address,add.national_id,add.account_staus,upd.amount_to_deposite,add.deposit.month,add.deposit.day,add.deposit.year);
 
+        }
 
+    }
+    fclose(old);
+    fclose(newrec);
 }
 
 //-----------------------------Get Cash function---------------------------------
@@ -386,7 +437,4 @@ void Randum_Password_Generation(){
 		printf("%c", password[rand() % (sizeof password - 1)]);
 	}
 }
-
-
-
 
